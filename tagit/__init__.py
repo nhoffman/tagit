@@ -1,3 +1,3 @@
-from tagit.tagit import get_version
+from .tagit import get_version
 
 __version__ = get_version()

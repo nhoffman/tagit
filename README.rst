@@ -41,7 +41,7 @@ Let's say you have a Python package with the following repository layout::
 
 2. In your ``__init__.py`` include the following lines::
 
-     from yourpackage.tagit import get_version
+     from .tagit import get_version
      __version__ = get_version()
 
 3. In ``setup.py``, import the variable containing the version string
