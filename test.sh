@@ -19,9 +19,8 @@ py3env(){
 }
 
 for setup in py2env py3env; do
-    $setup
-
     while read cmd; do
+	$setup
 	echo "$cmd"
 	$cmd > /dev/null
 	tagit --version
