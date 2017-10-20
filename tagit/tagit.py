@@ -29,8 +29,13 @@ def get_version(datadir=None, version_file='version.txt'):
     datadir = datadir or os.path.join(os.path.dirname(__file__), 'data')
     version_file = os.path.join(datadir, version_file)
 
-    st0 = traceback.extract_stack()[0]
-    in_setup = st0.filename if hasattr(st0, 'filename') else st0[0] == 'setup.py'
+    stack = traceback.extract_stack()
+
+    # only try to create the version file if setup.py is someplace in the stack
+    try:
+        in_setup = any(s.filename.endswith('setup.py') for s in stack)
+    except AttributeError:
+        in_setup = any(s[0].endswith('setup.py') for s in stack)
 
     if in_setup:
         cmd = ['git', 'describe', '--tags', '--dirty']
