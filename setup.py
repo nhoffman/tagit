@@ -12,6 +12,9 @@ setup(
     package_dir={'tagit': 'tagit'},
     package_data={'tagit': ['data/*']},
     version=__version__,
+    entry_points={
+        'console_scripts': ['tagit = tagit.main:main']
+    },
     # test_suite='tests',
     classifiers=[
         'Development Status :: 3 - Alpha',
