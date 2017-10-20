@@ -9,29 +9,15 @@ def get_version(datadir=None, version_file='version.txt'):
     containing a version number corresponding to the output of 'git
     describe --tags --dirty'. In all cases, the contents of this file
     is converted into a (hopefully) PEP-440 compliant version string
-    and returned. ``datadir`` is an optional path to package data;
-    when not provided, assumes package data resides in a directory
-    named "data" in the same directory as this file (which in turn is
-    expected to be placed in the same directory as the top-level
-    package __init__.py). Further notes and assumptions:
-
-    - get_version() should be called from the package __init__.py, for example:
-        from ._version import get_version
-        __version__ = get_version()
-    - at least one git tag is defined
-    - setup.py should import
-    - setuptools.setup includes a directive to include {datadir}/ver in a
-      package distribution, for example
-      ``setuptools.setup(package_data={'my_package': ['data/*']})``
+    and returned.
 
     """
 
     datadir = datadir or os.path.join(os.path.dirname(__file__), 'data')
     version_file = os.path.join(datadir, version_file)
 
-    stack = traceback.extract_stack()
-
     # only try to create the version file if setup.py is someplace in the stack
+    stack = traceback.extract_stack()
     try:
         in_setup = any(s.filename.endswith('setup.py') for s in stack)
     except AttributeError:
