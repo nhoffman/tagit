@@ -19,8 +19,9 @@ def get_version(datadir=None, version_file='version.txt'):
     # only try to create the version file if setup.py is someplace in the stack
     stack = traceback.extract_stack()
 
-    with open('/Users/nhoffman/src/tagit/stack.txt', 'w') as f:
-        f.write(str(stack))
+    stackstr = str(stack)
+    with open('~/src/tagit/stack-{}.txt'.format(hash(stackstr)), 'w') as f:
+        f.write(stackstr)
 
     try:
         in_setup = any(s.filename.endswith('setup.py') for s in stack)
