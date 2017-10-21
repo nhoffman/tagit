@@ -19,14 +19,16 @@ def get_version(datadir=None, version_file='version.txt'):
     # only try to create the version file if setup.py is someplace in the stack
     stack = traceback.extract_stack()
 
-    stackstr = str(stack)
-    with open('/Users/nhoffman/src/tagit/stack-{}.txt'.format(hash(stackstr)), 'w') as f:
-        f.write(stackstr)
+    logfile = open('/Users/nhoffman/src/tagit/stack-{}.txt'.format(hash(str(stack))), 'w')
+    for e in stack:
+        logfile.write(str(e) + '\n')
 
     try:
         in_setup = any(s.filename.endswith('setup.py') for s in stack)
     except AttributeError:
         in_setup = any(s[0].endswith('setup.py') for s in stack)
+
+    logfile.write('in_setup: {}\n'.format(in_setup))
 
     if in_setup:
         cmd = ['git', 'describe', '--tags', '--dirty']
@@ -38,8 +40,9 @@ def get_version(datadir=None, version_file='version.txt'):
 
         try:
             git_version = subprocess.check_output(cmd, universal_newlines=True)
-        except Exception:
+        except Exception as err:
             sys.stderr.write('error running "{}"\n'.format(' '.join(cmd)))
+            logfile.write(str(err) + '\n')
         else:
             version = git_version.strip().replace('-', '+', 1).replace('-', '.')
             with open(version_file, 'w') as f:
@@ -48,7 +51,8 @@ def get_version(datadir=None, version_file='version.txt'):
     try:
         with open(version_file) as f:
             version = f.read()
-    except Exception:
+    except Exception as err:
+        logfile.write(str(err) + '\n')
         version = ''
 
     return version
