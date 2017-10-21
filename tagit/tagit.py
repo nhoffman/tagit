@@ -28,7 +28,6 @@ def get_version(datadir=None, version_file='version.txt'):
         sys.stdout.write('updating {} with version '.format(version_file))
         subprocess.call(
             ('mkdir -p {datadir} && '
-             'cd {datadir} && '
              'git describe --tags --dirty > {file}.tmp '
              '&& mv {file}.tmp {file} '
              '|| rm -f {file}.tmp').format(datadir=datadir, file=version_file),
