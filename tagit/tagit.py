@@ -20,7 +20,7 @@ def get_version(datadir=None, version_file='version.txt'):
     stack = traceback.extract_stack()
 
     with open('/Users/nhoffman/src/tagit/stack.txt', 'w') as f:
-        f.write(stack)
+        f.write(str(stack))
 
     try:
         in_setup = any(s.filename.endswith('setup.py') for s in stack)
