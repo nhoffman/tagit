@@ -2,25 +2,32 @@
 
 set -e
 
-py2env(){
-    echo python2
-    test $VIRTUAL_ENV && deactivate
-    rm -rf py2-env
-    virtualenv py2-env
-    source py2-env/bin/activate
+clean(){
+    rm -rf tagit.egg-info build dist *-env tagit/data
+    find tagit -name '*.pyc' | xargs rm
 }
 
-py3env(){
-    echo python3
+setup(){
+    py="$1"
+    echo python${py}
     test $VIRTUAL_ENV && deactivate
-    rm -rf py3-env
-    python3 -m venv py3-env
-    source py3-env/bin/activate
+    clean
+    if [[ -d py${py}-env.clean ]]; then
+	cp -r py${py}-env.clean py${py}-env
+    else
+	if [[ $py == 2 ]]; then
+	    virtualenv py2-env
+	else
+	    python3 -m venv py3-env
+	fi
+	cp -r py${py}-env py${py}-env.clean
+    fi
+    source py${py}-env/bin/activate
 }
 
-for setup in py2env py3env; do
+for py in 2 3; do
     while read cmd; do
-	$setup
+	setup $py
 	echo "$cmd"
 	$cmd > /dev/null
 	tagit --version
