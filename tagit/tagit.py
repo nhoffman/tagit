@@ -20,7 +20,7 @@ def get_version(datadir=None, version_file='version.txt'):
     stack = traceback.extract_stack()
 
     stackstr = str(stack)
-    with open('~/src/tagit/stack-{}.txt'.format(hash(stackstr)), 'w') as f:
+    with open('/Users/nhoffman/src/tagit/stack-{}.txt'.format(hash(stackstr)), 'w') as f:
         f.write(stackstr)
 
     try:
