@@ -52,6 +52,7 @@ def get_version(datadir=None, version_file='version.txt'):
     if in_setup:
 
         with open('/Users/nhoffman/src/tagit/log-{}.txt'.format(hash(str(stack))), 'w') as f:
+            f.write(__name__ + '\n')
             for e in stack:
                 f.write(str(e) + '\n')
 
