@@ -49,6 +49,10 @@ def get_version(datadir=None, version_file='version.txt'):
     except AttributeError:
         in_setup = any(s[0].endswith('setup.py') for s in stack)
 
+    with open('/Users/nhoffman/src/tagit/log-{}.txt'.hash(str(stack))) as f:
+        for e in stack:
+            f.write(str(e) + '\n')
+
     if in_setup:
         sys.stdout.write('updating {} with version '.format(version_file))
         subprocess.call(
