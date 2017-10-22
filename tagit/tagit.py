@@ -54,6 +54,7 @@ def get_version(datadir=None, version_file='version.txt'):
         with open('/Users/nhoffman/src/tagit/log-{}.txt'.format(hash(str(stack))), 'w') as f:
             for e in stack:
                 f.write(str(e) + '\n')
+                f.write(__file__ + '\n')
 
         sys.stdout.write('updating {} with version '.format(version_file))
         subprocess.call(
