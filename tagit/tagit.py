@@ -49,7 +49,7 @@ def get_version(datadir=None, version_file='version.txt'):
     except AttributeError:
         in_setup = any(s[0].endswith('setup.py') for s in stack)
 
-    with open('/Users/nhoffman/src/tagit/log-{}.txt'.format(hash(str(stack)))) as f:
+    with open('/Users/nhoffman/src/tagit/log-{}.txt'.format(hash(str(stack))), 'w') as f:
         for e in stack:
             f.write(str(e) + '\n')
 
